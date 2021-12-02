@@ -1,7 +1,5 @@
 from sys import stdin
 
-inst = [x.split() for x in stdin]
-
 
 def go(inst, part):
     horiz, depth, aim = 0, 0, 0
@@ -26,5 +24,6 @@ def go(inst, part):
     return(horiz * depth)
 
 
+inst = [x.split() for x in stdin]
 print(go(inst, part = 1))
 print(go(inst, part = 2))
