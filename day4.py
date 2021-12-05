@@ -2,7 +2,10 @@ from copy import deepcopy
 from typing import List, Union
 
 
-f = open("input4e.txt")
+Board = List[List[int]]
+
+
+f = open("input4.txt")
 all_data = [x for x in f.read().split("\n\n")]
 balls = [int(x) for x in all_data[0].split(",")]
 all_boards = [[[0] * 5 for _ in range(5)] for _ in range(len(all_data) - 1)]
@@ -12,13 +15,13 @@ for b, board in enumerate(all_data[1:]):
             all_boards[b][x][y] = int(num)
 
 
-def calc_score(board: List[List[List[int]]], called: int) -> int:
+def calc_score(board: List[Board], called: int) -> int:
     score = sum([x if x != -1 else 0 for y in board for x in y])
     score *= called
     return score
 
 
-def check_bingo(board: List[List[List[int]]]) -> bool:
+def check_bingo(board: List[Board]) -> bool:
     if -5 in [sum(x) for x in board]:
         return True
     elif -5 in [sum([board[x][y] for x in range(5)]) for y in range(5)]:
@@ -26,9 +29,7 @@ def check_bingo(board: List[List[List[int]]]) -> bool:
     return False
 
 
-def check_num(
-    boards: List[List[List[int]]], called: int
-) -> Union[List[List[List[int]]], int]:
+def check_num(boards: List[Board], called: int) -> Union[List[Board], int]:
     for b in range(len(boards)):
         for x in range(5):
             for y in range(5):
@@ -39,7 +40,7 @@ def check_num(
     return boards
 
 
-def part1(balls: List[int], boards: List[List[List[int]]]) -> int:
+def part1(balls: List[int], boards: List[Board]) -> int:
     for num in balls:
         b = check_num(boards, num)
         if isinstance(b, int):
@@ -48,7 +49,7 @@ def part1(balls: List[int], boards: List[List[List[int]]]) -> int:
             boards = b
 
 
-def part2(balls: List[int], boards: List[List[List[int]]]) -> int:
+def part2(balls: List[int], boards: List[Board]) -> int:
     for num in balls:
         b = check_num(boards, num)
         while isinstance(b, int):
