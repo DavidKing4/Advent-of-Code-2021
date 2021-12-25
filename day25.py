@@ -30,11 +30,6 @@ def part1(cucumber):
         old_cucumber = deepcopy(cucumber)
         cucumber = move_east(cucumber)
         cucumber = move_south(cucumber)
-        # for line in cucumber:
-        #     print(line)
-        # print()
-        # for line in old_cucumber:
-        #     print(line)
         c += 1
         if all(
             [
