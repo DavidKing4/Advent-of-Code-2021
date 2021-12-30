@@ -1,18 +1,9 @@
+from aoc_timer import aoc_timer
 from copy import deepcopy
 from typing import List, Union
-
+from timeit import timeit
 
 Board = List[List[int]]
-
-
-f = open("input4.txt")
-all_data = [x for x in f.read().split("\n\n")]
-balls = [int(x) for x in all_data[0].split(",")]
-all_boards = [[[0] * 5 for _ in range(5)] for _ in range(len(all_data) - 1)]
-for b, board in enumerate(all_data[1:]):
-    for x, line in enumerate(board.split("\n")):
-        for y, num in enumerate(line.split()):
-            all_boards[b][x][y] = int(num)
 
 
 def calc_score(board: List[Board], called: int) -> int:
@@ -61,5 +52,21 @@ def part2(balls: List[int], boards: List[Board]) -> int:
     print(len(boards))
 
 
-print(part1(balls, deepcopy(all_boards)))
-print(part2(balls, deepcopy(all_boards)))
+def main():
+    f = open("input4.txt")
+    all_data = [x for x in f.read().split("\n\n")]
+    balls = [int(x) for x in all_data[0].split(",")]
+    all_boards = [[[0] * 5 for _ in range(5)] for _ in range(len(all_data) - 1)]
+    for b, board in enumerate(all_data[1:]):
+        for x, line in enumerate(board.split("\n")):
+            for y, num in enumerate(line.split()):
+                all_boards[b][x][y] = int(num)
+    name = __name__
+    boards = deepcopy(all_boards)
+    print(aoc_timer(part1, (balls, boards), "Part1: "))
+    boards = deepcopy(all_boards)
+    print(aoc_timer(part2, (balls, boards), "Part2: "))
+
+
+if __name__ == "__main__":
+    main()
